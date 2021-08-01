@@ -5,10 +5,10 @@ import { MenuStyled, MenuLink } from '../../styles/components/Menu'
 const Menu = () => {
   return (
     <MenuStyled>
-      <Link to='/'>
+      <Link to='/' style={{ textDecoration: 'none' }}>
         <MenuLink>Users</MenuLink>
       </Link>
-      <Link to='/task'>
+      <Link to='/task' style={{ textDecoration: 'none' }}>
         <MenuLink>Task</MenuLink>
       </Link>
     </MenuStyled>

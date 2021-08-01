@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Margin, Table, Td } from '../../styles/components/Users'
+import { Table, Td } from '../../styles/components/Users'
 
 const Users = () => {
   const [users, setUsers] = useState([])
@@ -12,7 +12,7 @@ const Users = () => {
   }, [])
 
   return (
-    <Margin>
+    <div>
       <Table>
         <thead>
           <tr>
@@ -31,7 +31,7 @@ const Users = () => {
           ))}
         </tbody>
       </Table>
-    </Margin>
+    </div>
   )
 }
 

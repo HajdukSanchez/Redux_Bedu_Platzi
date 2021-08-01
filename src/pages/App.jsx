@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { GlobalStyles } from '../styles/GlobalStyles'
+import { Margin } from '../styles/pages/App'
 import { Menu, Users } from '../components'
 
 const App = () => {
@@ -9,7 +10,9 @@ const App = () => {
       <GlobalStyles />
       <Router>
         <Menu />
-        <Route exact path='/' component={Users} />
+        <Margin>
+          <Route exact path='/' component={Users} />
+        </Margin>
       </Router>
     </>
   )
