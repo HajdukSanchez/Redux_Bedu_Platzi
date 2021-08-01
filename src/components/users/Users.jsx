@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Table, Td } from '../../styles/components/Users'
 import { connect } from 'react-redux'
+import { Table, Td } from '../../styles/components/Users'
+import * as usersActions from '../../actions/usersActions'
 
 const Users = () => {
   const [users, setUsers] = useState([])
   useEffect(() => {
-    ;(async () => {
-      const { data } = await axios.get('https://jsonplaceholder.typicode.com/users')
-      setUsers(data) //* Set the users we get by the API
-    })()
+    // ;(async () => {
+    //   const { data } = await axios.get('https://jsonplaceholder.typicode.com/users')
+    //   setUsers(data) //* Set the users we get by the API
+    // })()
   }, [])
 
   return (
@@ -42,5 +43,5 @@ const mapStateToProps = (reducers) => {
 }
 
 export default connect(mapStateToProps, {
-  /* actions */
+  usersActions,
 })(Users)
