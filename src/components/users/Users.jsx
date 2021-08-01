@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Table, Td } from '../../styles/components/Users'
+import { connect } from 'react-redux'
 
 const Users = () => {
   const [users, setUsers] = useState([])
@@ -35,4 +36,11 @@ const Users = () => {
   )
 }
 
-export default Users
+// *Here we have the reducers state that Users component is going to use
+const mapStateToProps = (reducers) => {
+  return reducers.usersReducers
+}
+
+export default connect(mapStateToProps, {
+  /* actions */
+})(Users)
