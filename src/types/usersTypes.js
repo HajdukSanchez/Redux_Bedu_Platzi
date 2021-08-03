@@ -1,3 +1,3 @@
-export const GET_ALL = 'GET_ALL' // For get all the users
-export const LOADING = 'LOADING' // For loading the data
-export const ERROR = 'ERROR' // If we have an error
+export const GET_ALL_USERS = 'GET_ALL_USERS' // For get all the users
+export const LOADING_USERS = 'LOADING_USERS' // For loading the data
+export const ERROR_USERS = 'ERROR_USERS' // If we have an error

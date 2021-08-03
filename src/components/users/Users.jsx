@@ -4,9 +4,9 @@ import * as usersActions from '../../actions/usersActions'
 // *Components
 import { UsersList, Loader, Error } from '../'
 
-const Users = ({ getAll, users, loading, error }) => {
+const Users = ({ getAllUsers, users, loading, error }) => {
   useEffect(() => {
-    getAll()
+    getAllUsers()
   }, [])
 
   return (
