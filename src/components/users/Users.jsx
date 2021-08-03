@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Table, Td, Container } from '../../styles/components/Users'
 import * as usersActions from '../../actions/usersActions'
-import { Loader } from '../'
+// *Components
+import { UsersList, Loader, Error } from '../'
 
 const Users = ({ getAll, users, loading, error }) => {
   useEffect(() => {
@@ -10,29 +10,11 @@ const Users = ({ getAll, users, loading, error }) => {
   }, [])
 
   return (
-    <Container>
+    <div>
       {loading && <Loader />}
-      {users && (
-        <Table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>E-Mail</th>
-              <th>Link</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users?.map((user) => (
-              <tr key={user.id}>
-                <Td>{user.name}</Td>
-                <Td>{user.email}</Td>
-                <Td>{user.website}</Td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      )}
-    </Container>
+      {error && <Error text={error} />}
+      {users && <UsersList />}
+    </div>
   )
 }
 
