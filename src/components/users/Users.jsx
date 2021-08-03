@@ -19,7 +19,7 @@ const Users = ({ getAll, users }) => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {users?.map((user) => (
             <tr key={user.id}>
               <Td>{user.name}</Td>
               <Td>{user.email}</Td>
