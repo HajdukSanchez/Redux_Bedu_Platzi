@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 // *Styles
 import { Table, Td } from '../../styles/components/UsersList.js'
-import { Title } from '../../styles/GlobalStyles'
+import '@fortawesome/fontawesome-free/css/all.css'
 
 const UsersList = ({ users }) => {
   return (
@@ -17,11 +18,16 @@ const UsersList = ({ users }) => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {users.map((user, key) => (
             <tr key={user.id}>
               <Td>{user.name}</Td>
               <Td>{user.email}</Td>
               <Td>{user.website}</Td>
+              <Td>
+                <Link to={`/posts/${key}`}>
+                  <i className='fas fa-eye' />
+                </Link>
+              </Td>
             </tr>
           ))}
         </tbody>

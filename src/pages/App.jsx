@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { GlobalStyles } from '../styles/GlobalStyles'
 import { Margin } from '../styles/pages/App'
-import { Menu, Users } from '../components'
+import { Menu, Users, Posts } from '../components'
 
 const App = () => {
   return (
@@ -12,6 +12,7 @@ const App = () => {
         <Menu />
         <Margin>
           <Route exact path='/' component={Users} />
+          <Route exact path='/posts/:key' component={Posts} />
         </Margin>
       </Router>
     </>
