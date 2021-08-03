@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Table, Td } from '../../styles/components/Users'
 import * as usersActions from '../../actions/usersActions'
 
-const Users = (props) => {
-  const [users, setUsers] = useState([])
-
+const Users = ({ getAll, users }) => {
   useEffect(() => {
-    props.getAll()
+    getAll()
   }, [])
 
   return (
