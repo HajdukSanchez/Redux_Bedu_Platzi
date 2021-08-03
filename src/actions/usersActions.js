@@ -1,9 +1,12 @@
 import axios from 'axios'
 // *Types
-import { GET_ALL } from '../types/usersTypes'
+import { GET_ALL, LOADING, ERROR } from '../types/usersTypes'
 
 // *The 'dispatch' start the call and talk to the reducer for make the state change
 export const getAll = () => async (dispatch) => {
+  dispatch({
+    type: LOADING,
+  })
   try {
     const { data } = await axios.get('https://jsonplaceholder.typicode.com/users')
     dispatch({
@@ -11,6 +14,9 @@ export const getAll = () => async (dispatch) => {
       payload: data,
     })
   } catch (error) {
-    throw new Error(error)
+    dispatch({
+      type: ERROR,
+      payload: error.message,
+    })
   }
 }
