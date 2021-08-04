@@ -10,18 +10,17 @@ export const getPostsByUser = (id) => async (dispatch, getState) => {
   /* const { users } = getState().usersReducers // Users from the reducer */
   const { posts } = getState().postsReducers // Posts from the reducer
   const post = posts.find((post, index) => post[index].userId == id)
-
   try {
-    let postsForStore = [...posts]
+    let newPosts = [...posts]
     // !If the post is not already in the store
     if (!post) {
       const { data } = await axios.get(`http://jsonplaceholder.typicode.com/posts?userId=${id}`)
-      postsForStore = [...posts, data]
+      newPosts = [...posts, data]
     }
     // const userToShow = users.find((user) => user.id == id)
     dispatch({
       type: GET_POSTS_BY_USER,
-      payload: postsForStore,
+      payload: newPosts,
     })
   } catch (error) {
     dispatch({
