@@ -6,7 +6,7 @@ import { UsersList, Loader, Error } from '../'
 
 const Users = ({ getAllUsers, users, loading, error }) => {
   useEffect(() => {
-    getAllUsers()
+    if (users.length < 1) getAllUsers() // !If no users
   }, [])
 
   return (
@@ -18,9 +18,15 @@ const Users = ({ getAllUsers, users, loading, error }) => {
   )
 }
 
+const { getAllUsers } = usersActions
+
 // *Here we have the reducers state that Users component is going to use
 const mapStateToProps = (reducers) => {
   return reducers.usersReducers
 }
 
-export default connect(mapStateToProps, usersActions)(Users)
+const mapDispatchToProps = {
+  getAllUsers,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users)

@@ -13,7 +13,7 @@ const Posts = ({
 }) => {
   useEffect(() => {
     const getData = async () => {
-      if (users.length < 1) await getAllUsers() // !If we don't have users, go for them
+      if (users.length < 1) await getAllUsers() // !If no users, go for them first
       getPostsByUser(key)
     }
     getData()

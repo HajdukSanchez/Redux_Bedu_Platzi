@@ -25,7 +25,7 @@ const UsersList = ({ users }) => {
               <Td>{user.website}</Td>
               <Td>
                 <Link to={`/posts/${key}`}>
-                  <i className='fas fa-eye' />
+                  <i className='fas fa-eye' style={{ color: '#95ca3e' }} />
                 </Link>
               </Td>
             </tr>
