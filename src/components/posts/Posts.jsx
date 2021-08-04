@@ -5,7 +5,7 @@ import * as postsActions from '../../actions/postsActions'
 
 const Posts = ({
   match: {
-    params: { key },
+    params: { id },
   },
   usersReducers: { users }, // If we have multiples reducers, we need to specify the reducer component for data
   getAllUsers,
@@ -14,12 +14,12 @@ const Posts = ({
   useEffect(() => {
     const getData = async () => {
       if (users.length < 1) await getAllUsers() // !If no users, go for them first
-      getPostsByUser(key)
+      getPostsByUser(id)
     }
     getData()
   }, [])
 
-  return <div>Posts {key}</div>
+  return <div>Posts {id}</div>
 }
 
 // *We map only what we need

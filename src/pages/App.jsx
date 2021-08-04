@@ -12,7 +12,7 @@ const App = () => {
         <Menu />
         <Margin>
           <Route exact path='/' component={Users} />
-          <Route exact path='/posts/:key' component={Posts} />
+          <Route exact path='/posts/:id' component={Posts} />
         </Margin>
       </Router>
     </>

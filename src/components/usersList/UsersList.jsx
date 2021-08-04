@@ -18,13 +18,13 @@ const UsersList = ({ users }) => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, key) => (
+          {users.map((user) => (
             <tr key={user.id}>
               <Td>{user.name}</Td>
               <Td>{user.email}</Td>
               <Td>{user.website}</Td>
               <Td>
-                <Link to={`/posts/${key}`}>
+                <Link to={`/posts/${user.id}`}>
                   <i className='fas fa-eye' style={{ color: '#95ca3e' }} />
                 </Link>
               </Td>
