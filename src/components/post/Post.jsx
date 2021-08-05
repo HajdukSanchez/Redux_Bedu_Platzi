@@ -2,9 +2,13 @@ import React from 'react'
 // *Styles
 import { PostContainer, Title } from '../../styles/components/Post'
 
-const Post = ({ title, body }) => {
+const Post = ({ id, title, body }) => {
+  const handlePostsComments = (id) => {
+    console.log(`Post number ${id}`)
+  }
+
   return (
-    <PostContainer>
+    <PostContainer onClick={() => handlePostsComments(id)}>
       <Title>{title}</Title>
       <h4>{body}</h4>
     </PostContainer>

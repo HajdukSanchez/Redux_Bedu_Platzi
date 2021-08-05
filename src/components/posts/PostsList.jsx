@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import * as usersActions from '../../actions/usersActions'
 import * as postsActions from '../../actions/postsActions'
 import { Loader, Error, Post } from '../'
+import { useState } from 'react'
 
 const Posts = ({
   match: {
@@ -14,11 +15,15 @@ const Posts = ({
   getPostsByUser,
   getUserByPosts,
 }) => {
+  const [isInfoReady, setIsInfoReady] = useState(false)
+
   useEffect(() => {
     ;(async () => {
       if (users.length < 1) await getAllUsers()
-      getUserByPosts(id) // !If no user, go for them
-      if (posts.length < 1) getPostsByUser(id) // !If no posts, go for them
+      await getUserByPosts(id) // !If no user, go for them
+      await getPostsByUser(id) // !If no posts, go for them
+      const isReady = !userLoading && !postLoading && !userError && !postError ? true : false // f¿If everything is ready
+      setIsInfoReady(isReady)
     })()
   }, [])
 
@@ -30,9 +35,7 @@ const Posts = ({
       <h1 style={{ marginBottom: '40px' }}>
         Posts by <i>{userPosts?.name}</i>
       </h1>
-      {posts.map((post) => (
-        <Post key={post.id} {...post} />
-      ))}
+      {isInfoReady && posts.map((post) => <Post key={post.id} {...post} />)}
     </div>
   )
 }
@@ -41,7 +44,7 @@ const Posts = ({
 const { getAllUsers, getUserByPosts } = usersActions
 const { getPostsByUser } = postsActions
 
-// We send an object with multiples reducers
+// *We send an object with multiples reducers
 const mapStateToProps = ({ usersReducers, postsReducers }) => {
   return { usersReducers, postsReducers }
 }
