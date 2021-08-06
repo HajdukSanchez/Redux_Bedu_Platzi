@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import * as usersActions from '../../actions/usersActions'
-import * as postsActions from '../../actions/postsActions'
+import { getAllUsers, getUserByPosts } from '../../actions/usersActions'
+import { getPostsByUser } from '../../actions/postsActions'
 import { Loader, Error, Post } from '../'
 import { useState } from 'react'
 
@@ -9,7 +9,7 @@ const Posts = ({
   match: {
     params: { id },
   },
-  usersReducers: { users, userPosts, loading: userLoading, error: userError }, // If we have multiples reducers, we need to specify the reducer component for data
+  usersReducers: { users, userPosts, loading: userLoading, error: userError }, // ?If we have multiples reducers, we need to specify the reducer component for data
   postsReducers: { posts, loading: postLoading, error: postError },
   getAllUsers,
   getPostsByUser,
@@ -22,7 +22,7 @@ const Posts = ({
       if (users.length < 1) await getAllUsers()
       await getUserByPosts(id) // !If no user, go for them
       await getPostsByUser(id) // !If no posts, go for them
-      const isReady = !userLoading && !postLoading && !userError && !postError ? true : false // f¿If everything is ready
+      const isReady = !userLoading && !postLoading && !userError && !postError ? true : false // !If everything is ready
       setIsInfoReady(isReady)
     })()
   }, [])
@@ -35,14 +35,14 @@ const Posts = ({
       <h1 style={{ marginBottom: '40px' }}>
         Posts by <i>{userPosts?.name}</i>
       </h1>
-      {isInfoReady && posts.map((post) => <Post key={post.id} {...post} />)}
+      {isInfoReady && posts.map((post) => <Post key={post.id} {...post} userId={userPosts.id} />)}
     </div>
   )
 }
 
-// *We map only what we need
+/* // *We map only what we need
 const { getAllUsers, getUserByPosts } = usersActions
-const { getPostsByUser } = postsActions
+const { getPostsByUser, openClose } = postsActions */
 
 // *We send an object with multiples reducers
 const mapStateToProps = ({ usersReducers, postsReducers }) => {

@@ -1,6 +1,6 @@
 import axios from 'axios'
 // *Types
-import { GET_POSTS_BY_USER, LOADING_POSTS, ERROR_POSTS } from '../types/postsTypes'
+import { GET_POSTS_BY_USER, GET_POSTS_BY_ID, LOADING_POSTS, ERROR_POSTS } from '../types/postsTypes'
 
 // *With the getState parameter, redux allow to know the actual state of the store
 export const getPostsByUser = (id) => async (dispatch) => {
@@ -19,4 +19,11 @@ export const getPostsByUser = (id) => async (dispatch) => {
       payload: error.message,
     })
   }
+}
+
+export const getPostById = (post) => (dispatch) => {
+  dispatch({
+    type: GET_POSTS_BY_ID,
+    payload: post,
+  })
 }
