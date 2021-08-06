@@ -21,9 +21,16 @@ export const getPostsByUser = (id) => async (dispatch) => {
   }
 }
 
-export const getPostById = (post) => (dispatch) => {
-  dispatch({
-    type: GET_POSTS_BY_ID,
-    payload: post,
-  })
+export const getPostById = (post) => (dispatch, getState) => {
+  const { postOpen } = getState().postsReducers
+  const isNewPost = post.id === postOpen.id ? false : true
+  // ?If it is a new post for open than the actual
+  if (isNewPost) {
+    dispatch({
+      type: GET_POSTS_BY_ID,
+      payload: post,
+    })
+  }
 }
+
+export const getCommentsByPostId = (postId) => (dispatch) => {}

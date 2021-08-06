@@ -4,6 +4,7 @@ import { GET_POSTS_BY_USER, GET_POSTS_BY_ID, LOADING_POSTS, ERROR_POSTS } from '
 const INITIAL_STATE = {
   posts: [],
   postOpen: {},
+  comments: {},
   loading: false,
   error: '',
 }
