@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { getPostById } from '../../actions/postsActions'
+import { getPostById, getCommentsByPostId } from '../../actions/postsActions'
 import { Comments } from '../'
 // *Styles
 import { PostContainer, Title } from '../../styles/components/Post'
 
-const Post = ({ userId, id, title, body, getPostById, postOpen }) => {
+const Post = ({ userId, id, title, body, getPostById, postOpen, getCommentsByPostId }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [actualPost, setActualPost] = useState({ userId, id, title, body })
 
-  const handlePost = () => {
-    if (isOpen) getPostById(actualPost)
+  const handlePost = async () => {
+    if (!isOpen) {
+      await getPostById(actualPost)
+      await getCommentsByPostId(id)
+    }
     setIsOpen(!isOpen) // *Open or close the panel of comments
   }
 
@@ -29,6 +32,7 @@ const mapStateToProps = ({ postReducers }) => {
 
 const mapDispatchToProps = {
   getPostById,
+  getCommentsByPostId,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

@@ -1,6 +1,6 @@
 import axios from 'axios'
 // *Types
-import { GET_POSTS_BY_USER, GET_POSTS_BY_ID, LOADING_POSTS, ERROR_POSTS } from '../types/postsTypes'
+import { GET_POSTS_BY_USER, GET_POSTS_BY_ID, GET_COMMENTS_BY_POST, LOADING_POSTS, ERROR_POSTS } from '../types/postsTypes'
 
 // *With the getState parameter, redux allow to know the actual state of the store
 export const getPostsByUser = (id) => async (dispatch) => {
@@ -33,4 +33,20 @@ export const getPostById = (post) => (dispatch, getState) => {
   }
 }
 
-export const getCommentsByPostId = (postId) => (dispatch) => {}
+export const getCommentsByPostId = (postId) => async (dispatch) => {
+  dispatch({
+    type: LOADING_POSTS,
+  })
+  try {
+    const { data } = await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
+    dispatch({
+      type: GET_COMMENTS_BY_POST,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: ERROR_POSTS,
+      payload: error.message,
+    })
+  }
+}

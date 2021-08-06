@@ -1,13 +1,18 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-const Comments = () => {
+const Comments = ({ postsReducers: { comments } }) => {
   return (
     <ul>
-      <li>Hello</li>
-      <li>Hello</li>
-      <li>Hello</li>
+      {comments?.map((comment) => (
+        <li key={comment.id}>{comment.name}</li>
+      ))}
     </ul>
   )
 }
 
-export default Comments
+const mapStateToProps = ({ postsReducers }) => {
+  return { postsReducers }
+}
+
+export default connect(mapStateToProps)(Comments)

@@ -1,10 +1,10 @@
 // *Types
-import { GET_POSTS_BY_USER, GET_POSTS_BY_ID, LOADING_POSTS, ERROR_POSTS } from '../../types/postsTypes'
+import { GET_POSTS_BY_USER, GET_POSTS_BY_ID, GET_COMMENTS_BY_POST, LOADING_POSTS, ERROR_POSTS } from '../../types/postsTypes'
 
 const INITIAL_STATE = {
   posts: [],
   postOpen: {},
-  comments: {},
+  comments: [],
   loading: false,
   error: '',
 }
@@ -15,6 +15,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, posts: action.payload, loading: false }
     case GET_POSTS_BY_ID:
       return { ...state, postOpen: action.payload, loading: false }
+    case GET_COMMENTS_BY_POST:
+      return { ...state, comments: action.payload, loading: false }
     case LOADING_POSTS:
       return { ...state, loading: true }
     case ERROR_POSTS:
