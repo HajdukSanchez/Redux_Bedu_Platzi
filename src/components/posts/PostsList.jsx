@@ -35,7 +35,7 @@ const Posts = ({
       <h1 style={{ marginBottom: '40px' }}>
         Posts by <i>{userPosts?.name}</i>
       </h1>
-      {isInfoReady && posts.map((post) => <Post key={post.id} {...post} userId={userPosts.id} />)}
+      {isInfoReady && posts.map((post) => <Post key={post.id} {...post} />)}
     </div>
   )
 }

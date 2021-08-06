@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { getPostById, getCommentsByPostId } from '../../actions/postsActions'
+import { getActualPost, getCommentsByPost } from '../../actions/postsActions'
 import { Comments } from '../'
 // *Styles
 import { PostContainer, Title } from '../../styles/components/Post'
 
-const Post = ({ userId, id, title, body, getPostById, postOpen, getCommentsByPostId }) => {
+const Post = ({ id, title, body, getActualPost, postsReducers: { postOpen, comment_loading, comment_error }, getCommentsByPost }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [actualPost, setActualPost] = useState({ userId, id, title, body })
 
   const handlePost = async () => {
-    if (!isOpen) {
-      await getPostById(actualPost)
-      await getCommentsByPostId(id)
+    if (!postOpen || !isOpen) {
+      await getActualPost(id) // Posts clicked
+      await getCommentsByPost(id) // Comments for post clicked
     }
     setIsOpen(!isOpen) // *Open or close the panel of comments
   }
@@ -21,18 +20,18 @@ const Post = ({ userId, id, title, body, getPostById, postOpen, getCommentsByPos
     <PostContainer onClick={() => handlePost()}>
       <Title>{title}</Title>
       <h4>{body}</h4>
-      {isOpen && <Comments {...postOpen} />}
+      {isOpen && <Comments {...postOpen} {...comment_loading} {...comment_error} />}
     </PostContainer>
   )
 }
 
-const mapStateToProps = ({ postReducers }) => {
-  return { postReducers }
+const mapStateToProps = ({ postsReducers }) => {
+  return { postsReducers }
 }
 
 const mapDispatchToProps = {
-  getPostById,
-  getCommentsByPostId,
+  getActualPost,
+  getCommentsByPost,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

@@ -1,13 +1,32 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-const Comments = ({ postsReducers: { comments } }) => {
+// *components
+import { Error, Loader } from '../'
+
+const Comments = ({ comments, comment_loading, comment_error }) => {
   return (
-    <ul>
-      {comments?.map((comment) => (
-        <li key={comment.id}>{comment.name}</li>
-      ))}
-    </ul>
+    <>
+      {comment_loading && <Loader />}
+      {comment_error && <Error text={comment_error} />}
+      {!comment_error && !comment_error ? (
+        <ul>
+          {comments?.map((comment) => (
+            <li key={comment.id}>
+              <a href={`mailto:${comment.email}`} target='_blank' rel='noopener noreferrer'>
+                <b>
+                  <u>{comment.email}</u>
+                </b>
+              </a>
+              <br />
+              {comment.body}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        ''
+      )}
+    </>
   )
 }
 
