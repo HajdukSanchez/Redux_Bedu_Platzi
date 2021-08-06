@@ -5,7 +5,6 @@ export const PostContainer = styled.div`
   border-left: 2px solid #95ca3e;
   border-bottom: 2px solid #95ca3e;
   transition: border-left 0.3s;
-  cursor: pointer;
   &:hover {
     border-left: 10px solid #95ca3e;
   }
@@ -13,4 +12,8 @@ export const PostContainer = styled.div`
 
 export const Title = styled.h3`
   text-transform: uppercase;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 `

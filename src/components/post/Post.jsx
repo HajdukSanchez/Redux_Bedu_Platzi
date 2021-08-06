@@ -5,7 +5,7 @@ import { Comments } from '../'
 // *Styles
 import { PostContainer, Title } from '../../styles/components/Post'
 
-const Post = ({ id, title, body, getActualPost, postsReducers: { postOpen, comment_loading, comment_error }, getCommentsByPost }) => {
+const Post = ({ id, title, body, getActualPost, postsReducers: { postOpen }, getCommentsByPost }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const handlePost = async () => {
@@ -17,10 +17,10 @@ const Post = ({ id, title, body, getActualPost, postsReducers: { postOpen, comme
   }
 
   return (
-    <PostContainer onClick={() => handlePost()}>
-      <Title>{title}</Title>
+    <PostContainer>
+      <Title onClick={() => handlePost()}>{title}</Title>
       <h4>{body}</h4>
-      {isOpen && <Comments {...postOpen} {...comment_loading} {...comment_error} />}
+      {isOpen && <Comments {...postOpen} />}
     </PostContainer>
   )
 }
