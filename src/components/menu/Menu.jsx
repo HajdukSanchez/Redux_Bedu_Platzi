@@ -8,7 +8,7 @@ const Menu = () => {
       <Link to='/' style={{ textDecoration: 'none' }}>
         <MenuLink>Users</MenuLink>
       </Link>
-      <Link to='/task' style={{ textDecoration: 'none' }}>
+      <Link to='/tasks' style={{ textDecoration: 'none' }}>
         <MenuLink>Task</MenuLink>
       </Link>
     </MenuStyled>
