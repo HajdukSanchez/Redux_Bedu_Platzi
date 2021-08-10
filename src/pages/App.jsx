@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { GlobalStyles } from '../styles/GlobalStyles'
 import { Margin } from '../styles/pages/App'
-import { Menu, Users, PostsList, Tasks } from '../components'
+import { Menu, Users, PostsList, Tasks, NewTask } from '../components'
 
 const App = () => {
   return (
@@ -14,6 +14,7 @@ const App = () => {
           <Route exact path='/' component={Users} />
           <Route exact path='/posts/:id' component={PostsList} />
           <Route exact path='/tasks' component={Tasks} />
+          <Route exact path='/tasks/new-task' component={NewTask} />
         </Margin>
       </Router>
     </>

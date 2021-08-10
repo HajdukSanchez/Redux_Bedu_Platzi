@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getAllTasks } from '../../actions/tasksActions'
 import { Error, Loader } from '../'
@@ -29,6 +30,9 @@ const Tasks = ({ tasks, loading, error, getAllTasks }) => {
       {loading && <Loader />}
       {!error && !loading && tasks && (
         <div>
+          <button>
+            <Link to='/tasks/new-task'>Add Task</Link>
+          </button>
           {/* If we have an Object, the parameters in the map function are the variables inside the data */}
           {Object.keys(tasks).map((userId) => (
             <div key={userId}>
