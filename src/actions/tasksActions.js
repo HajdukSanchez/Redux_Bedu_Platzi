@@ -8,9 +8,19 @@ export const getAllTasks = () => async (dispatch) => {
   })
   try {
     const { data } = await axios.get('https://jsonplaceholder.typicode.com/todos')
+    const tasks = {}
+    data.map(
+      (task) =>
+        (tasks[task.userId] = {
+          ...tasks[task.userId],
+          [task.id]: {
+            ...task,
+          },
+        })
+    )
     dispatch({
       type: GET_ALL_TASKS,
-      payload: data,
+      payload: tasks,
     })
   } catch (error) {
     dispatch({
@@ -19,24 +29,3 @@ export const getAllTasks = () => async (dispatch) => {
     })
   }
 }
-
-/* export const getUserByPosts = (id) => (dispatch, getState) => {
-  const { users, userPosts } = getState().usersReducers // Users from the reducer
-  dispatch({
-    type: LOADING_USERS,
-  })
-  try {
-    const user = !userPosts ? userPosts : users.find((user) => user.id === parseInt(id))
-    // To store the user
-    dispatch({
-      type: GET_USER_POSTS,
-      payload: user,
-    })
-  } catch (error) {
-    dispatch({
-      type: ERROR_USERS,
-      payload: error.message,
-    })
-  }
-}
- */
