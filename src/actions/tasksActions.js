@@ -1,6 +1,6 @@
 import axios from 'axios'
 // *Types
-import { GET_ALL_TASKS, LOADING_TASKS, ERROR_TASKS } from '../types/tasksTypes'
+import { GET_ALL_TASKS, CHANGE_USER_ID, CHANGE_TASK_TITLE, LOADING_TASKS, ERROR_TASKS } from '../types/tasksTypes'
 
 export const getAllTasks = () => async (dispatch) => {
   dispatch({
@@ -28,4 +28,18 @@ export const getAllTasks = () => async (dispatch) => {
       payload: error.message,
     })
   }
+}
+
+export const changeUserId = (id) => (dispatch) => {
+  dispatch({
+    type: CHANGE_USER_ID,
+    payload: id,
+  })
+}
+
+export const changeTitle = (title) => (dispatch) => {
+  dispatch({
+    type: CHANGE_TASK_TITLE,
+    payload: title,
+  })
 }
