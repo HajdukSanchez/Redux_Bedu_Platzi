@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { changeTitle, changeUserId, addNewTask } from '../../actions/tasksActions'
 import { Loader, Error } from '../'
 
-const NewTask = ({ user_id, title, changeUserId, changeTitle, addNewTask, error, loading }) => {
+const NewTask = ({ user_id, title, changeUserId, changeTitle, addNewTask, error, loading, redirect }) => {
   const [userID, setUserID] = useState(user_id)
   const [titleNew, setTitleNew] = useState(title)
 
@@ -31,6 +31,8 @@ const NewTask = ({ user_id, title, changeUserId, changeTitle, addNewTask, error,
     <>
       {error && <Error text={error} />}
       {loading && <Loader />}
+      {/* We redirect the component to tasks, if the redirect is true. */}
+      {redirect && <Redirect to='/tasks' />}
       {!loading && !error && (
         <div>
           <h1>Add new task</h1>

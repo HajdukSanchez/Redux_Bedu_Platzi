@@ -7,18 +7,19 @@ const INITIAL_STATE = {
   error: '',
   user_id: 0,
   title: '',
+  redirect: false,
 }
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_ALL_TASKS:
-      return { ...state, tasks: action.payload, loading: false }
+      return { ...state, tasks: action.payload, loading: false, user_id: 0, title: '', redirect: false }
     case CHANGE_USER_ID:
       return { ...state, user_id: action.payload }
     case CHANGE_TASK_TITLE:
       return { ...state, title: action.payload }
     case ADD_NEW_TASK:
-      return { ...state, tasks: {}, loading: false }
+      return { ...state, tasks: {}, loading: false, redirect: true }
     case LOADING_TASKS:
       return { ...state, loading: true }
     case ERROR_TASKS:
