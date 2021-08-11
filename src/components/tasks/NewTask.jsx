@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { changeTitle, changeUserId, addNewTask } from '../../actions/tasksActions'
+import { Loader, Error } from '../'
 
-const NewTask = ({ user_id, title, changeUserId, changeTitle, addNewTask }) => {
+const NewTask = ({ user_id, title, changeUserId, changeTitle, addNewTask, error, loading }) => {
   const [userID, setUserID] = useState(user_id)
   const [titleNew, setTitleNew] = useState(title)
 
@@ -26,24 +28,30 @@ const NewTask = ({ user_id, title, changeUserId, changeTitle, addNewTask }) => {
   }
 
   return (
-    <div>
-      <h1>Add new task</h1>
-      <div>
-        <label htmlFor='user-id'>
-          User ID:
-          <input type='number' name='user-id' value={userID} onChange={handleUserId} />
-        </label>
-      </div>
-      <div>
-        <label htmlFor='task-text'>
-          Title:
-          <input type='text' name='task-text' value={titleNew} onChange={handleTitle} />
-        </label>
-      </div>
-      <button onClick={handleSaveTask} disabled={!userID || !titleNew}>
-        Save task
-      </button>
-    </div>
+    <>
+      {error && <Error text={error} />}
+      {loading && <Loader />}
+      {!loading && !error && (
+        <div>
+          <h1>Add new task</h1>
+          <div>
+            <label htmlFor='user-id'>
+              User ID:
+              <input type='number' name='user-id' value={userID} onChange={handleUserId} />
+            </label>
+          </div>
+          <div>
+            <label htmlFor='task-text'>
+              Title:
+              <input type='text' name='task-text' value={titleNew} onChange={handleTitle} />
+            </label>
+          </div>
+          <button onClick={handleSaveTask} disabled={!userID || !titleNew}>
+            Save task
+          </button>
+        </div>
+      )}
+    </>
   )
 }
 

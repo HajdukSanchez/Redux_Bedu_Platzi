@@ -14,9 +14,9 @@ export default (state = INITIAL_STATE, action) => {
     case GET_ALL_TASKS:
       return { ...state, tasks: action.payload, loading: false }
     case CHANGE_USER_ID:
-      return { ...state, user_id: action.payload, loading: false }
+      return { ...state, user_id: action.payload }
     case CHANGE_TASK_TITLE:
-      return { ...state, title: action.payload, loading: false }
+      return { ...state, title: action.payload }
     case ADD_NEW_TASK:
       return { ...state, tasks: {}, loading: false }
     case LOADING_TASKS:
