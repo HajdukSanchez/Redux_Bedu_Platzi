@@ -14,7 +14,8 @@ const App = () => {
           <Route exact path='/' component={Users} />
           <Route exact path='/posts/:id' component={PostsList} />
           <Route exact path='/tasks' component={Tasks} />
-          <Route exact path='/tasks/new-task' component={NewTask} />
+          <Route exact path='/tasks/new' component={NewTask} />
+          <Route exact path='/tasks/edit/:USER_ID/:TASK_ID' component={NewTask} />
         </Margin>
       </Router>
     </>

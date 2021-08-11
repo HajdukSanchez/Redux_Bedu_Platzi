@@ -1,20 +1,42 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { changeTitle, changeUserId, addNewTask } from '../../actions/tasksActions'
+import { changeTitle, changeUserId, addNewTask, editTask } from '../../actions/tasksActions'
 import { Loader, Error } from '../'
 
-const NewTask = ({ user_id, title, changeUserId, changeTitle, addNewTask, error, loading, redirect }) => {
+const NewTask = ({
+  user_id,
+  title,
+  changeUserId,
+  changeTitle,
+  addNewTask,
+  editTask,
+  error,
+  loading,
+  redirect,
+  tasks,
+  match: {
+    params: { TASK_ID, USER_ID },
+  },
+}) => {
   const [userID, setUserID] = useState(user_id)
   const [titleNew, setTitleNew] = useState(title)
 
-  const handleUserId = (event) => {
-    setUserID(event.target.value)
+  useEffect(() => {
+    if (USER_ID && TASK_ID) {
+      const task = tasks[USER_ID][TASK_ID]
+      handleUserId(task.userId)
+      handleTitle(task.title)
+    }
+  }, [USER_ID, TASK_ID])
+
+  const handleUserId = (data) => {
+    setUserID(data)
     changeUserId(userID)
   }
 
-  const handleTitle = (event) => {
-    setTitleNew(event.target.value)
+  const handleTitle = (data) => {
+    setTitleNew(data)
     changeTitle(titleNew)
   }
 
@@ -24,7 +46,17 @@ const NewTask = ({ user_id, title, changeUserId, changeTitle, addNewTask, error,
       title: titleNew,
       completed: false,
     }
-    addNewTask(newTask)
+    if (USER_ID && TASK_ID) {
+      const task = tasks[USER_ID][TASK_ID]
+      const editedTask = {
+        ...newTask,
+        completed: task.completed,
+        id: task.id,
+      }
+      editTask(editedTask)
+    } else {
+      addNewTask(newTask)
+    }
   }
 
   return (
@@ -39,13 +71,13 @@ const NewTask = ({ user_id, title, changeUserId, changeTitle, addNewTask, error,
           <div>
             <label htmlFor='user-id'>
               User ID:
-              <input type='number' name='user-id' value={userID} onChange={handleUserId} />
+              <input type='number' name='user-id' value={userID} onChange={() => handleUserId(this.target.value)} />
             </label>
           </div>
           <div>
             <label htmlFor='task-text'>
               Title:
-              <input type='text' name='task-text' value={titleNew} onChange={handleTitle} />
+              <input type='text' name='task-text' value={titleNew} onChange={() => handleTitle(this.target.value)} />
             </label>
           </div>
           <button onClick={handleSaveTask} disabled={!userID || !titleNew}>
@@ -63,6 +95,7 @@ const mapDispatchToProps = {
   changeUserId,
   changeTitle,
   addNewTask,
+  editTask,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewTask)

@@ -1,6 +1,6 @@
 import axios from 'axios'
 // *Types
-import { GET_ALL_TASKS, CHANGE_USER_ID, CHANGE_TASK_TITLE, ADD_NEW_TASK, LOADING_TASKS, ERROR_TASKS } from '../types/tasksTypes'
+import { GET_ALL_TASKS, CHANGE_USER_ID, CHANGE_TASK_TITLE, ADD_NEW_TASK, EDIT_TASK, LOADING_TASKS, ERROR_TASKS } from '../types/tasksTypes'
 
 export const getAllTasks = () => async (dispatch) => {
   dispatch({
@@ -54,6 +54,25 @@ export const addNewTask = (task) => async (dispatch) => {
       type: ADD_NEW_TASK,
       payload: data,
     })
+  } catch (error) {
+    dispatch({
+      type: ERROR_TASKS,
+      payload: error.message,
+    })
+  }
+}
+
+export const editTask = (task) => async (dispatch) => {
+  dispatch({
+    type: LOADING_TASKS,
+  })
+  try {
+    const { data } = await axios.put('https://jsonplaceholder.typicode.com/todos', task)
+    console.log(data)
+    /* dispatch({
+      type: EDIT_TASK,
+      payload: data,
+    }) */
   } catch (error) {
     dispatch({
       type: ERROR_TASKS,

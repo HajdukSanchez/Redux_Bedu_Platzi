@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { getAllTasks } from '../../actions/tasksActions'
 import { Error, Loader } from '../'
 // *Styles
-import { TasksContainer } from '../../styles/components/Tasks'
+import { TasksContainer, TaskButton, Task } from '../../styles/components/Tasks'
 
 const Tasks = ({ tasks, loading, error, getAllTasks }) => {
   useEffect(() => {
@@ -17,10 +17,14 @@ const Tasks = ({ tasks, loading, error, getAllTasks }) => {
       ...tasks[userId],
     }
     return Object.keys(tasksByUser).map((taskId) => (
-      <div>
+      <Task>
         <input type='checkbox' defaultChecked={tasksByUser[taskId].completed} />
         {tasksByUser[taskId].title}
-      </div>
+        <TaskButton>
+          <Link to={`/tasks/edit/${userId}/${taskId}`}>Edit</Link>
+        </TaskButton>
+        <TaskButton>Delete</TaskButton>
+      </Task>
     ))
   }
 
@@ -31,7 +35,7 @@ const Tasks = ({ tasks, loading, error, getAllTasks }) => {
       {!error && !loading && tasks && (
         <div>
           <button>
-            <Link to='/tasks/new-task'>Add Task</Link>
+            <Link to='/tasks/new'>Add Task</Link>
           </button>
           {/* If we have an Object, the parameters in the map function are the variables inside the data */}
           {Object.keys(tasks).map((userId) => (
