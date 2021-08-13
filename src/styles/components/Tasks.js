@@ -35,6 +35,7 @@ export const TaskButton = styled.button`
 `
 
 export const TaskTitle = styled.h3`
+  margin-top: 0;
   padding-bottom: 0.4rem;
   border-bottom: 1px solid black;
   text-align: right;
