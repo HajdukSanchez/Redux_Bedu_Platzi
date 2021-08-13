@@ -1,13 +1,15 @@
 import axios from 'axios'
 // *Types
-import { GET_ALL_TASKS, CHANGE_USER_ID, CHANGE_TASK_TITLE, ADD_NEW_TASK, EDIT_TASK, LOADING_TASKS, ERROR_TASKS } from '../types/tasksTypes'
+import { GET_ALL_TASKS, CHANGE_USER_ID, CHANGE_TASK_TITLE, ADD_NEW_TASK, EDIT_TASK, UPDATE_TASKS, LOADING_TASKS, ERROR_TASKS } from '../types/tasksTypes'
+
+const API_URL = 'https://jsonplaceholder.typicode.com/todos'
 
 export const getAllTasks = () => async (dispatch) => {
   dispatch({
     type: LOADING_TASKS,
   })
   try {
-    const { data } = await axios.get('https://jsonplaceholder.typicode.com/todos')
+    const { data } = await axios.get(API_URL)
     const tasks = {}
     data.map(
       (task) =>
@@ -49,7 +51,7 @@ export const addNewTask = (task) => async (dispatch) => {
     type: LOADING_TASKS,
   })
   try {
-    const { data } = await axios.post('https://jsonplaceholder.typicode.com/todos', task)
+    const { data } = await axios.post(API_URL, task)
     dispatch({
       type: ADD_NEW_TASK,
       payload: data,
@@ -67,16 +69,35 @@ export const editTask = (task) => async (dispatch) => {
     type: LOADING_TASKS,
   })
   try {
-    const { data } = await axios.put('https://jsonplaceholder.typicode.com/todos', task)
+    const { data } = await axios.put(`${API_URL}/${task.id}`, task)
     console.log(data)
-    /* dispatch({
+    dispatch({
       type: EDIT_TASK,
       payload: data,
-    }) */
+    })
   } catch (error) {
     dispatch({
       type: ERROR_TASKS,
       payload: error.message,
     })
   }
+}
+
+export const changeCheckout = (userID, taskID) => (dispatch, getState) => {
+  const { tasks } = getState().tasksReducers
+  const selected = tasks[userID][taskID]
+  const newTasks = {
+    ...tasks,
+  }
+  newTasks[userID] = {
+    ...tasks[userID],
+  }
+  newTasks[userID][taskID] = {
+    ...tasks[userID][taskID],
+    completed: !selected.completed,
+  }
+  dispatch({
+    type: UPDATE_TASKS,
+    payload: newTasks,
+  })
 }

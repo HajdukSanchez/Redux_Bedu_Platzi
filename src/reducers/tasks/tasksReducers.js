@@ -1,5 +1,5 @@
 // *Types
-import { GET_ALL_TASKS, CHANGE_USER_ID, CHANGE_TASK_TITLE, ADD_NEW_TASK, LOADING_TASKS, ERROR_TASKS } from '../../types/tasksTypes'
+import { GET_ALL_TASKS, CHANGE_USER_ID, CHANGE_TASK_TITLE, ADD_NEW_TASK, UPDATE_TASKS, LOADING_TASKS, ERROR_TASKS } from '../../types/tasksTypes'
 
 const INITIAL_STATE = {
   tasks: {},
@@ -18,8 +18,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, user_id: action.payload }
     case CHANGE_TASK_TITLE:
       return { ...state, title: action.payload }
+    case UPDATE_TASKS:
+      return { ...state, title: action.payload }
     case ADD_NEW_TASK:
-      return { ...state, tasks: {}, loading: false, redirect: true }
+      return { ...state, tasks: action.payload, loading: false }
     case LOADING_TASKS:
       return { ...state, loading: true }
     case ERROR_TASKS:

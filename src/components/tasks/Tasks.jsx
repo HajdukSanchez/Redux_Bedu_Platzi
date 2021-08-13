@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getAllTasks } from '../../actions/tasksActions'
+import { getAllTasks, changeCheckout } from '../../actions/tasksActions'
 import { Error, Loader } from '../'
 // *Styles
 import { TasksContainer, TaskButton, Task } from '../../styles/components/Tasks'
 
-const Tasks = ({ tasks, loading, error, getAllTasks }) => {
+const Tasks = ({ tasks, loading, error, getAllTasks, changeCheckout }) => {
   useEffect(() => {
     if (!Object.keys(tasks).length) getAllTasks() // !If we don't have tasks, go for them
   }, [])
@@ -18,7 +18,7 @@ const Tasks = ({ tasks, loading, error, getAllTasks }) => {
     }
     return Object.keys(tasksByUser).map((taskId) => (
       <Task>
-        <input type='checkbox' defaultChecked={tasksByUser[taskId].completed} />
+        <input type='checkbox' defaultChecked={tasksByUser[taskId].completed} onChange={() => changeCheckout(userId, taskId)} />
         {tasksByUser[taskId].title}
         <TaskButton>
           <Link to={`/tasks/edit/${userId}/${taskId}`}>Edit</Link>
@@ -54,6 +54,7 @@ const mapStateToProps = ({ tasksReducers }) => tasksReducers
 
 const mapDispatchToProps = {
   getAllTasks,
+  changeCheckout,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tasks)
