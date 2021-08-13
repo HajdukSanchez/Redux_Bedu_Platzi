@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { getAllTasks, changeCheckout, deleteTask } from '../../actions/tasksActions'
 import { Error, Loader } from '../'
 // *Styles
-import { TasksContainer, TaskButton, Task } from '../../styles/components/Tasks'
+import { TasksContainer, TaskButton, Task, TaskInfo, TaskText, TaskTitle } from '../../styles/components/Tasks'
 
 const Tasks = ({ tasks, loading, error, getAllTasks, changeCheckout, deleteTask }) => {
   useEffect(() => {
@@ -18,14 +18,18 @@ const Tasks = ({ tasks, loading, error, getAllTasks, changeCheckout, deleteTask 
     }
     return Object.keys(tasksByUser).map((taskId) => (
       <Task>
-        <input type='checkbox' defaultChecked={tasksByUser[taskId].completed} onChange={() => changeCheckout(userId, taskId)} disabled />
-        {tasksByUser[taskId].title}
-        <TaskButton>
-          <Link to={`/tasks/edit/${userId}/${taskId}`}>Edit</Link>
-        </TaskButton>
-        <TaskButton onClick={() => deleteTask(taskId)} disabled>
-          Delete
-        </TaskButton>
+        <TaskInfo>
+          <input type='checkbox' defaultChecked={tasksByUser[taskId].completed} onChange={() => changeCheckout(userId, taskId)} disabled />
+          <TaskText>{tasksByUser[taskId].title}</TaskText>
+        </TaskInfo>
+        <div>
+          <Link to={`/tasks/edit/${userId}/${taskId}`}>
+            <TaskButton active>Edit</TaskButton>
+          </Link>
+          <TaskButton onClick={() => deleteTask(taskId)} disabled delete>
+            Delete
+          </TaskButton>
+        </div>
       </Task>
     ))
   }
@@ -36,13 +40,15 @@ const Tasks = ({ tasks, loading, error, getAllTasks, changeCheckout, deleteTask 
       {loading && <Loader />}
       {!error && !loading && tasks && (
         <div>
-          <button>
-            <Link to='/tasks/new'>Add Task</Link>
-          </button>
+          <Link to='/tasks/new'>
+            <TaskButton add active>
+              Add Task
+            </TaskButton>
+          </Link>
           {/* If we have an Object, the parameters in the map function are the variables inside the data */}
           {Object.keys(tasks).map((userId) => (
             <div key={userId}>
-              <h3>User {userId}:</h3>
+              <TaskTitle>User {userId}</TaskTitle>
               <TasksContainer>{addYTasksByUser(userId)}</TasksContainer>
             </div>
           ))}

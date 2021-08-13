@@ -70,7 +70,6 @@ export const editTask = (task) => async (dispatch) => {
   })
   try {
     const { data } = await axios.put(`${API_URL}/${task.id}`, task)
-    console.log(data)
     dispatch({
       type: EDIT_TASK,
       payload: data,
