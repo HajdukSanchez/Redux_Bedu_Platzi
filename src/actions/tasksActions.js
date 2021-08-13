@@ -1,6 +1,6 @@
 import axios from 'axios'
 // *Types
-import { GET_ALL_TASKS, CHANGE_USER_ID, CHANGE_TASK_TITLE, ADD_NEW_TASK, EDIT_TASK, UPDATE_TASKS, LOADING_TASKS, ERROR_TASKS } from '../types/tasksTypes'
+import { GET_ALL_TASKS, CHANGE_USER_ID, CHANGE_TASK_TITLE, ADD_NEW_TASK, EDIT_TASK, UPDATE_TASKS, DELETE_TASK, LOADING_TASKS, ERROR_TASKS } from '../types/tasksTypes'
 
 const API_URL = 'https://jsonplaceholder.typicode.com/todos'
 
@@ -100,4 +100,22 @@ export const changeCheckout = (userID, taskID) => (dispatch, getState) => {
     type: UPDATE_TASKS,
     payload: newTasks,
   })
+}
+
+export const deleteTask = (taskID) => async (dispatch) => {
+  dispatch({
+    type: LOADING_TASKS,
+  })
+  try {
+    const { data } = await axios.delete(`${API_URL}/${taskID}`)
+    dispatch({
+      type: DELETE_TASK,
+      payload: {},
+    })
+  } catch (error) {
+    dispatch({
+      type: ERROR_TASKS,
+      payload: error.message,
+    })
+  }
 }

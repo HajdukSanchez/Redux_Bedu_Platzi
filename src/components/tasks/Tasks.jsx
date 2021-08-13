@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getAllTasks, changeCheckout } from '../../actions/tasksActions'
+import { getAllTasks, changeCheckout, deleteTask } from '../../actions/tasksActions'
 import { Error, Loader } from '../'
 // *Styles
 import { TasksContainer, TaskButton, Task } from '../../styles/components/Tasks'
 
-const Tasks = ({ tasks, loading, error, getAllTasks, changeCheckout }) => {
+const Tasks = ({ tasks, loading, error, getAllTasks, changeCheckout, deleteTask }) => {
   useEffect(() => {
     if (!Object.keys(tasks).length) getAllTasks() // !If we don't have tasks, go for them
   }, [])
@@ -18,12 +18,14 @@ const Tasks = ({ tasks, loading, error, getAllTasks, changeCheckout }) => {
     }
     return Object.keys(tasksByUser).map((taskId) => (
       <Task>
-        <input type='checkbox' defaultChecked={tasksByUser[taskId].completed} onChange={() => changeCheckout(userId, taskId)} />
+        <input type='checkbox' defaultChecked={tasksByUser[taskId].completed} onChange={() => changeCheckout(userId, taskId)} disabled />
         {tasksByUser[taskId].title}
         <TaskButton>
           <Link to={`/tasks/edit/${userId}/${taskId}`}>Edit</Link>
         </TaskButton>
-        <TaskButton>Delete</TaskButton>
+        <TaskButton onClick={() => deleteTask(taskId)} disabled>
+          Delete
+        </TaskButton>
       </Task>
     ))
   }
@@ -55,6 +57,7 @@ const mapStateToProps = ({ tasksReducers }) => tasksReducers
 const mapDispatchToProps = {
   getAllTasks,
   changeCheckout,
+  deleteTask,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tasks)
